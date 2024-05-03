@@ -17,12 +17,12 @@ class CountDownLatchTest {
         List<Thread> workers = Stream.generate(() -> new Thread(new Worker(latch)))
                                      .limit(5)
                                      .toList();
-        System.out.println("## Start multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Start multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
         workers.forEach(Thread::start);
-        System.out.println("## Waiting for multi-threads to be finished [tid: " + getThreadId() + "]");
+        System.out.println("## Waiting for multi-threads to be finished [tid: " + ThreadSupport.getThreadId() + "]");
         latch.await();
         assertThat(latch.getCount()).isZero();
-        System.out.println("## Finished multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Finished multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
     }
 
     @Test
@@ -33,31 +33,31 @@ class CountDownLatchTest {
         List<Thread> workers = Stream.generate(() -> new Thread(new Worker(readyLatch, startLatch, finishLatch)))
                                      .limit(5)
                                      .toList();
-        System.out.println("## Start multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Start multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
         workers.forEach(Thread::start);
         readyLatch.await();
-        System.out.println("## Ready to run multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Ready to run multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
         assertThat(finishLatch.getCount()).isEqualTo(5);
         startLatch.countDown();
-        System.out.println("## Waiting for multi-threads to be finished [tid: " + getThreadId() + "]");
+        System.out.println("## Waiting for multi-threads to be finished [tid: " + ThreadSupport.getThreadId() + "]");
         finishLatch.await();
         assertThat(finishLatch.getCount()).isZero();
-        System.out.println("## Finished multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Finished multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
     }
 
     @Test
     void waitForSeconds() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(5);
-        List<Thread> workers = Stream.generate(() -> new Thread(new Worker(latch, 2000)))
+        List<Thread> workers = Stream.generate(() -> new Thread(new Worker(latch, 100)))
                                   .limit(5)
                                   .toList();
-        System.out.println("## Start multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Start multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
         workers.forEach(Thread::start);
-        System.out.println("## Waiting for multi-threads to be finished [tid: " + getThreadId() + "]");
-        latch.await(1, TimeUnit.SECONDS);
-        System.out.println("## Finished multi-threads [tid: " + getThreadId() + "]");
+        System.out.println("## Waiting for multi-threads to be finished [tid: " + ThreadSupport.getThreadId() + "]");
+        latch.await(50, TimeUnit.MILLISECONDS);
+        System.out.println("## Finished multi-threads [tid: " + ThreadSupport.getThreadId() + "]");
         assertThat(latch.getCount()).isEqualTo(5);
-        Thread.sleep(2000);
+        Thread.sleep(300);
     }
 
     private class Worker implements Runnable {
@@ -87,16 +87,16 @@ class CountDownLatchTest {
         @Override
         public void run() {
             if (sleepMillis > 0) {
-                System.out.println("start to run on [tid: " + getThreadId() + "]");
+                System.out.println("start to run on [tid: " + ThreadSupport.getThreadId() + "]");
                 try {
                     Thread.sleep(sleepMillis);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 finishLatch.countDown();
-                System.out.println("end running on [tid: " + getThreadId() + "]");
+                System.out.println("end running on [tid: " + ThreadSupport.getThreadId() + "]");
             } else if (readyLatch == null) {
-                System.out.println("run on [tid: " + getThreadId() + "]");
+                System.out.println("run on [tid: " + ThreadSupport.getThreadId() + "]");
                 finishLatch.countDown();
             } else {
                 readyLatch.countDown();
@@ -105,14 +105,9 @@ class CountDownLatchTest {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("run on [tid: " + getThreadId() + "]");
+                System.out.println("run on [tid: " + ThreadSupport.getThreadId() + "]");
                 finishLatch.countDown();
             }
         }
-    }
-
-    private static long getThreadId() {
-        return Thread.currentThread()
-                     .getId();
     }
 }
