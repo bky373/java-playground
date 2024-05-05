@@ -3,4 +3,9 @@ public class ThreadSupport {
         return Thread.currentThread()
                      .getId();
     }
+
+    public static String getThreadName() {
+        return Thread.currentThread()
+                     .getName();
+    }
 }
