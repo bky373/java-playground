@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+import org.example.ThreadSupport;
 import org.junit.jupiter.api.Test;
 
 // 예제 참고 https://codechacha.com/ko/java-countdownlatch/

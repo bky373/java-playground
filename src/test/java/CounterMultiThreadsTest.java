@@ -41,7 +41,7 @@ public class CounterMultiThreadsTest {
         }
 
         public synchronized void syncIncrement() {
-//            System.out.println("Counter.syncIncrement() with count " + count + " on [tid: " + ThreadSupport.getThreadName() + "]");
+//            System.out.println("Counter.syncIncrement() with count " + count + " on [tid: " + org.example.ThreadSupport.getThreadName() + "]");
             this.count = count + 1;
         }
     }
