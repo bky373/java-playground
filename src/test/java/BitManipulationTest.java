@@ -1,3 +1,5 @@
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 public class BitManipulationTest {
@@ -22,5 +24,20 @@ public class BitManipulationTest {
         }
         System.out.println("ans = " + ans);
         System.out.println("Integer.toBinaryString(ans) = " + Integer.toBinaryString(ans));
+        assertThat(ans).isEqualTo(964176192);
+    }
+
+    /**
+     * https://leetcode.com/problems/missing-number/
+     */
+    @Test
+    void missingNumber() {
+        int[] nums = new int[]{9, 6, 4, 2, 3, 5, 7, 0, 1};
+        int ans = nums.length;
+        for (int i=0; i<nums.length; i++) {
+            ans ^= i^nums[i];
+        }
+        System.out.println("ans = " + ans);
+        assertThat(ans).isEqualTo(8);
     }
 }
