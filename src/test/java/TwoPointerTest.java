@@ -30,4 +30,36 @@ public class TwoPointerTest {
         }
         assertThat(res).containsExactlyInAnyOrderElementsOf(List.of(-1, 1));
     }
+
+    @Test
+    void threeSum() {
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        Arrays.sort(nums);
+        System.out.println("nums = " + Arrays.toString(nums));
+        int i = 0, j, k;
+        int ni = 0, nj, nk;
+        Set<List<Integer>> res = new HashSet<>();
+        while (i < nums.length && ni <= 0) {
+            ni = nums[i];
+            j = i + 1;
+            k = nums.length - 1;
+            while (j < k) {
+                nj = nums[j];
+                nk = nums[k];
+                int sum = ni + nj + nk;
+                if (sum < 0) {
+                    j++;
+                } else if (sum > 0) {
+                    k--;
+                } else {
+                    res.add(List.of(ni, nj, nk));
+                    j++;
+                }
+            }
+            i++;
+        }
+        assertThat(res).containsExactlyInAnyOrderElementsOf(
+                List.of(List.of(-1, -1, 2),
+                        List.of(-1, 0, 1)));
+    }
 }
