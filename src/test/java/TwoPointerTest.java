@@ -62,4 +62,31 @@ public class TwoPointerTest {
                 List.of(List.of(-1, -1, 2),
                         List.of(-1, 0, 1)));
     }
+
+    /**
+     * https://leetcode.com/problems/container-with-most-water/
+     */
+    @Test
+    void maxArea() {
+        int[] height = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+//        int[] height = {1,1};
+        int left = 0;
+        int right = height.length - 1;
+        int max = 0;
+        while (left < right) {
+            int area = (right - left) * Math.min(height[left], height[right]);
+            if (area > max) {
+                max = area;
+            }
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        System.out.println("max = " + max);
+        assertThat(max).isEqualTo(49);
+//        assertThat(max).isEqualTo(1);
+    }
+
 }
