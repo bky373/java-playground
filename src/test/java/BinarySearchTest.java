@@ -110,4 +110,56 @@ public class BinarySearchTest {
         }
         assertThat(ans).isEqualTo(0);
     }
+
+    @Test
+    void search() {
+//        int[] nums = {4, 5, 6, 7, 0, 1, 2};
+        int[] nums = {2, 1};
+        int target = 0;
+        int res = -1;
+
+        if (nums.length == 1 && nums[0] == target) {
+            res = 0;
+        }
+        int minIndex = findMinIndex(nums);
+        int leftResult = binarySearch(nums, 0, minIndex - 1, target);
+        if (leftResult > -1) {
+            res = leftResult;
+            return;
+        }
+        res = binarySearch(nums, minIndex, nums.length - 1, target);
+        System.out.println("minIndex = " + minIndex);
+        System.out.println("res = " + res);
+    }
+
+    int findMinIndex(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (nums[left] > nums[right]) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < nums[right]) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        if (nums[0] < nums[left]) {
+            return 0;
+        }
+        return left;
+    }
+
+    int binarySearch(int[] nums, int left, int right, int target) {
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
 }
