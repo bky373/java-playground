@@ -1,5 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class HashingTest {
@@ -30,5 +32,50 @@ public class HashingTest {
         assertThat(res).isEqualTo(new int[]{24, 12, 8, 6});
 //        assertThat(res).isEqualTo(new int[]{0, 0, 9, 0, 0});
 //        assertThat(res).isEqualTo(new int[]{12, 16, 24, 48, 24});
+    }
+
+    @Test
+    void lengthOfLongestSubstring() {
+//        String s = "abcabcb";
+        String s = "bbb";
+//        String s = "pwwkew";
+//        String s = "dvdf";
+//        String s = " abc";
+        int start = 0, k = 0, longest = 0, mapVersion = 0;
+        Map<Character, Integer> charMap = new HashMap<>();
+//        b[s][k]bbb - curVersion[b]: 0, mapVersion: 0
+//        b[s]b[k]bb - curVersion[b]: 1, mapVersion: 0
+//                   - [Map Update] mapVersion: 1, longest = 1
+//        bb[s][k]bb - curVersion[b]: 1, mapVersion: 1
+//        bb[s]b[k]b - curVersion[b]: 2, mapVersion: 1
+//                   - [Map Update] mapVersion: 2, longest = 1
+
+//        a[s][k]bcabcbb - curVersion[a]: 0, mapVersion: 0
+//        a[s]b[k]cabcbb - curVersion[b]: 0, mapVersion: 0
+//        a[s]bc[k]abcbb - curVersion[c]: 0, mapVersion: 0
+//        a[s]bca[k]bcbb - curVersion[a]: 1, mapVersion: 0
+//                       - [Map Update] mapVersion: 1, longest = 3
+//        abca[s][k]bcbb - curVersion[a]: 1, mapVersion: 1
+//        abca[s]b[k]cbb - curVersion[b]: 1, mapVersion: 1
+//        ...
+
+        while (start + k < s.length()) {
+            char curr = s.charAt(start + k);
+//            System.out.println("charMap = " + charMap);
+//            System.out.printf("s[%c],k[%c]\n\n", s.charAt(start), curr);
+            int curVersion = charMap.getOrDefault(curr, 0);
+            if (curVersion > mapVersion) {
+                longest = Math.max(longest, k);
+                start++;
+                k = 0;
+                mapVersion = curVersion;
+            } else {
+                charMap.put(curr, mapVersion + 1);
+                k++;
+            }
+        }
+        longest = Math.max(longest, k);
+
+        assertThat(longest).isEqualTo(3);
     }
 }
