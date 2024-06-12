@@ -16,7 +16,7 @@ public class LinkedListTest {
      */
     @Test
     void reorderList() {
-        ListNode head = ListNodeSupport.linkNext(NODE_1, NODE_2, NODE_3, NODE_4);
+        ListNode head = ListNodeSupport.linkInOrder(NODE_1, NODE_2, NODE_3, NODE_4);
         System.out.println("head = " + head.toDetailString());
 
 //        0,1,2,3
@@ -66,7 +66,7 @@ public class LinkedListTest {
      */
     @Test
     void removeNthFromEnd() {
-        ListNode head = ListNodeSupport.linkNext(NODE_1, NODE_2);
+        ListNode head = ListNodeSupport.linkInOrder(NODE_1, NODE_2);
 //        ListNode head = ListNodeSupport.linkNext(NODE_1, NODE_2, NODE_3, NODE_4, NODE_5);
 //        ListNode head = ListNodeSupport.linkNext(NODE_1);
         int n = 2;

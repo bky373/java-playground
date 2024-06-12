@@ -21,7 +21,7 @@ public class ListNodeSupport {
         return new ListNode(val);
     }
 
-    public static ListNode linkNext(ListNode... nodes) {
+    public static ListNode linkInOrder(ListNode... nodes) {
         List<ListNode> list = Arrays.stream(nodes)
                                     .toList();
 
