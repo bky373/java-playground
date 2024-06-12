@@ -60,4 +60,36 @@ public class LinkedListTest {
         }
         System.out.println("reorderHead = " + reorderHead2);
     }
+
+    /**
+     *  https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+     */
+    @Test
+    void removeNthFromEnd() {
+        ListNode head = ListNodeSupport.linkNext(NODE_1, NODE_2);
+//        ListNode head = ListNodeSupport.linkNext(NODE_1, NODE_2, NODE_3, NODE_4, NODE_5);
+//        ListNode head = ListNodeSupport.linkNext(NODE_1);
+        int n = 2;
+
+        ListNode resultHead = head;
+        List<ListNode> nodes = new ArrayList<>();
+        while (head != null) {
+            nodes.add(head);
+            head = head.next;
+        }
+        System.out.println("nodes = " + nodes);
+
+        int i = nodes.size() - n;
+        if (i <= 0) {
+            resultHead = resultHead.next;
+            return;
+        }
+        ListNode node = nodes.get(i - 1);
+        if (node.next != null) {
+            node.next = node.next.next;
+        } else {
+            node.next = null;
+        }
+        System.out.println("head = " + resultHead);
+    }
 }
