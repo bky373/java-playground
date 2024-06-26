@@ -14,7 +14,10 @@ public class TreeNode {
         return "TreeNode[" + val + "]";
     }
 
-    public String toDetailString() {
-        return "TreeNode[v=" + val + ", l=" + left + ", r=" + right +"]";
+    public String toStringWithLR() {
+        return """
+                TreeNode{v=%s, l=%s, r=%s}""".formatted(val,
+                left != null ? left.toStringWithLR() : null,
+                right != null ? right.toStringWithLR() : null);
     }
 }

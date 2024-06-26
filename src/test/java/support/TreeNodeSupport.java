@@ -16,7 +16,20 @@ public class TreeNodeSupport {
     public static final TreeNode NODE_9 = new TreeNode(9);
     public static final TreeNode NODE_10 = new TreeNode(10);
 
-    public static TreeNode linkLeftRight(TreeNode node, TreeNode left, TreeNode right) {
+    public static TreeNode linkLeftAndRight(int parent, int left, int right) {
+        TreeNode node = new TreeNode(parent);
+        node.left = new TreeNode(left);
+        node.right = new TreeNode(right);
+        return node;
+    }
+
+    public static TreeNode linkLeftAndRight(TreeNode parent, int left, int right) {
+        parent.left = new TreeNode(left);
+        parent.right = new TreeNode(right);
+        return parent;
+    }
+
+    public static TreeNode linkLeftAndRight(TreeNode node, TreeNode left, TreeNode right) {
         node.left = left;
         node.right = right;
         return node;
