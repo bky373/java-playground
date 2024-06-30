@@ -11,7 +11,7 @@ public class TreeNode {
 
     @Override
     public String toString() {
-        return "TreeNode[" + val + "]";
+        return "TreeNode{" + val + "}";
     }
 
     public String toStringWithLR() {
