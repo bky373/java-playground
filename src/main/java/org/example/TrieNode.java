@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class TrieNode {
     private static final int MAX_SIZE = 26;
@@ -22,6 +23,10 @@ public class TrieNode {
 
     public void put(char ch, TrieNode node) {
         subNodes[ch - 'a'] = node;
+    }
+
+    public TrieNode[] getExistingSubNodes() {
+        return Arrays.stream(subNodes).filter(Objects::nonNull).toArray(TrieNode[]::new);
     }
 
     @Override

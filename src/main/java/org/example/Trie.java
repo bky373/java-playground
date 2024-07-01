@@ -20,36 +20,30 @@ public class Trie {
         node.isEndOfWord = true;
     }
 
+
     public boolean search(String word) {
-        TrieNode node = root;
-        for (int i = 0; i < word.length(); i++) {
-            if (node == null) {
-                return false;
-            }
-            if (!node.contains(word.charAt(i))) {
-                return false;
-            }
-            node = node.getSubNode(word.charAt(i));
-            if (i == word.length() - 1 && node.isEndOfWord) {
-                return true;
-            }
-        }
-        return false;
+        TrieNode node = searchPrefix(word);
+        return node != null && node.isEndOfWord;
     }
 
     public boolean startsWith(String word) {
+        return searchPrefix(word) != null;
+    }
+
+    public TrieNode searchPrefix(String word) {
         TrieNode node = root;
         for (int i = 0; i < word.length(); i++) {
             if (node == null) {
-                return false;
+                return null;
             }
             if (!node.contains(word.charAt(i))) {
-                return false;
+                return null;
             }
             node = node.getSubNode(word.charAt(i));
         }
-        return true;
+        return node;
     }
+
 
     @Override
     public String toString() {
