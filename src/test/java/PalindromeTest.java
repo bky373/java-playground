@@ -93,23 +93,21 @@ public class PalindromeTest {
         String longest = "";
 
         for (int i = 0; i < s.length(); i++) {
-            calculateMaxLength(i, i, maxStart, maxEnd, s);
-            calculateMaxLength(i, i+1, maxStart, maxEnd, s);
+            calculateMaxLength(i, i, s);
+            calculateMaxLength(i, i+1, s);
         }
 
         System.out.println("s.substring(maxStart, maxEnd + 1) = " + s.substring(maxStart, maxEnd + 1));
     }
 
-    public void calculateMaxLength(int start, int end, int maxStart, int maxEnd, String s){
+    public void calculateMaxLength(int start, int end, String s){
         while (start >= 0 && end < s.length() && s.charAt(start) == s.charAt(end)) {
-            if (maxEnd - maxStart < end - start) {
-                maxStart = start;
-                maxEnd = end;
+            if (this.maxEnd - this.maxStart < end - start) {
+                this.maxStart = start;
+                this.maxEnd = end;
             }
             start--;
             end++;
         }
-        this.maxStart = maxStart;
-        this.maxEnd = maxEnd;
     }
 }
